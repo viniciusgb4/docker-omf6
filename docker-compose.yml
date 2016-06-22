@@ -14,9 +14,9 @@ services:
           pubsubnet:
           pxenet:
               ipv4_address: 10.0.0.201
-#      volumes:
-#          - ./broker/root/.omf/:/root/.omf
-#          - ./broker/root/omf_sfa:/root/omf_sfa
+      volumes:
+          #- ./broker/data/.omf/:/root/.omf
+          - ./broker/data/omf_sfa:/root/omf_sfa
   pubsub:
       image: sameersbn/openfire
       container_name: pubsub
