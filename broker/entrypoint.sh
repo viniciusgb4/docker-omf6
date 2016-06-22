@@ -79,6 +79,7 @@ frisbee_proxy &> /var/log/ntrc/frisbee_proxy.log &
 cm_proxy &> /var/log/ntrc/cm_proxy.log &
 
 sleep 10s
+
 /root/omf_sfa/bin/create_resource -t node -c /root/omf_sfa/bin/conf.yaml -i /root/resources.json
 
 tail -f /var/log/omf-sfa.log

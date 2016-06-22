@@ -43,5 +43,6 @@ COPY config-files /root/config-files/
 #END COPY CONFIGURATION FILE
 
 #PULL FROM GIT HUB AND RUN BROKER
-COPY pull-and-run.sh /usr/bin/
-ENTRYPOINT ["/usr/bin/pull-and-run.sh"]
+COPY entrypoint.sh /usr/bin/
+RUN chmod 755 /usr/bin/entrypoint.sh
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
