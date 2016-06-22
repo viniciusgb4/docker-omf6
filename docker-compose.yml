@@ -1,0 +1,42 @@
+version: '2'
+services:
+  broker:
+      build:
+          context: ./broker
+      image: broker
+      container_name: broker
+      links:
+          - pubsub
+      ports:
+          - "8001:8001"
+      #entrypoint: /usr/bin/pull-and-run.sh
+      networks:
+          pubsubnet:
+          pxenet:
+              ipv4_address: 10.0.0.201
+#      volumes:
+#          - ./broker/root/.omf/:/root/.omf
+#          - ./broker/root/omf_sfa:/root/omf_sfa
+  pubsub:
+      image: sameersbn/openfire
+      container_name: pubsub
+      ports:
+          - "9090:9090"
+          - "5222:5222"
+          - "7777:7777"
+      volumes:
+          - ./openfire/data/:/var/lib/openfire
+      networks:
+          pubsubnet:
+          pxenet:
+              ipv4_address: 10.0.0.200
+
+networks:
+    pubsubnet:
+    pxenet:
+        ipam:
+          driver: default
+          config:
+            - subnet: 10.0.0.0/8
+              ip_range: 10.0.0.0/24
+              #gateway: 10.0.0.200
