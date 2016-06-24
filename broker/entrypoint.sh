@@ -69,6 +69,9 @@ if [ "$(ls -A /root/config-files)" ]; then
     #END OF PXE CONFIGURATION
 fi
 
+echo "Starting dnsmasq"
+/etc/init.d/dnsmasq start
+
 echo "Executing omf_sfa"
 bundle exec ruby -I lib lib/omf-sfa/am/am_server.rb start &> /var/log/omf-sfa.log &
 

@@ -9,14 +9,18 @@ services:
           - pubsub
       ports:
           - "8001:8001"
+          #- "53:53/udp"
+          #- "67:67/udp"
+          #- "69:69/udp"
       #entrypoint: /usr/bin/pull-and-run.sh
       networks:
           pubsubnet:
-          pxenet:
-              ipv4_address: 10.0.0.201
+          #pxenet:
+          #    ipv4_address: 10.0.1.201
       volumes:
-          #- ./broker/data/.omf/:/root/.omf
+          - ./broker/omf-images:/root/omf-images
           - ./broker/data/omf_sfa:/root/omf_sfa
+      restart: unless-stopped
   pubsub:
       image: sameersbn/openfire
       container_name: pubsub
@@ -28,15 +32,16 @@ services:
           - ./openfire/data/:/var/lib/openfire
       networks:
           pubsubnet:
-          pxenet:
-              ipv4_address: 10.0.0.200
+          #pxenet:
+          #    ipv4_address: 10.0.1.200
+      restart: unless-stopped
 
 networks:
     pubsubnet:
-    pxenet:
-        ipam:
-          driver: default
-          config:
-            - subnet: 10.0.0.0/8
-              ip_range: 10.0.0.0/24
-              #gateway: 10.0.0.200
+#    pxenet:
+#        ipam:
+#          driver: default
+#          config:
+#            - subnet: 10.0.1.0/24
+#              ip_range: 10.0.1.0/24
+#              #gateway: 10.0.0.200
