@@ -1,3 +1,4 @@
 DEFAULT harddrive
 LABEL harddrive
-localboot 0
+COM32 chain.c32
+APPEND hd0
