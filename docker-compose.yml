@@ -9,9 +9,9 @@ services:
           - pubsub
       ports:
           - "8001:8001"
-          #- "53:53/udp"
-          #- "67:67/udp"
-          #- "69:69/udp"
+          - "53:53/udp"
+          - "67:67/udp"
+          - "69:69/udp"
       #entrypoint: /usr/bin/pull-and-run.sh
       networks:
           pubsubnet:
