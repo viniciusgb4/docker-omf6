@@ -63,8 +63,8 @@ if [ "$(ls -A /root/config-files)" ]; then
     #START OF PXE CONFIGURATION
     echo "###############PXE CONFIGURATION###############"
     ln -s /usr/lib/syslinux/pxelinux.0 /tftpboot/
-    ln -s /tftpboot/pxelinux.cfg/omf-5.4 /tftpboot/pxelinux.cfg/01-00:03:1d:0c:23:46
-    ln -s /tftpboot/pxelinux.cfg/omf-5.4 /tftpboot/pxelinux.cfg/01-00:03:1d:0c:47:48
+    ln -s /tftpboot/pxelinux.cfg/pxeconfig /tftpboot/pxelinux.cfg/01-00:03:1d:0c:23:46
+    ln -s /tftpboot/pxelinux.cfg/pxeconfig /tftpboot/pxelinux.cfg/01-00:03:1d:0c:47:48
     cp -rf /root/dnsmasq.conf >> /etc/dnsmasq.conf
     cat /root/hosts >> /etc/hosts
     #END OF PXE CONFIGURATION

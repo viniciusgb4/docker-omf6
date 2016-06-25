@@ -5,43 +5,19 @@ services:
           context: ./broker
       image: broker
       container_name: broker
-      links:
-          - pubsub
       ports:
           - "8001:8001"
-          - "53:53/udp"
-          - "67:67/udp"
-          - "69:69/udp"
       #entrypoint: /usr/bin/pull-and-run.sh
-      networks:
-          pubsubnet:
-          #pxenet:
-          #    ipv4_address: 10.0.1.201
+      network-mode: "host"
       volumes:
           - ./broker/omf-images:/root/omf-images
           - ./broker/data/omf_sfa:/root/omf_sfa
+          - /tftpboot:/tftpboot
       restart: unless-stopped
   pubsub:
       image: sameersbn/openfire
       container_name: pubsub
-      ports:
-          - "9090:9090"
-          - "5222:5222"
-          - "7777:7777"
+      network-mode: "host"
       volumes:
           - ./openfire/data/:/var/lib/openfire
-      networks:
-          pubsubnet:
-          #pxenet:
-          #    ipv4_address: 10.0.1.200
       restart: unless-stopped
-
-networks:
-    pubsubnet:
-#    pxenet:
-#        ipam:
-#          driver: default
-#          config:
-#            - subnet: 10.0.1.0/24
-#              ip_range: 10.0.1.0/24
-#              #gateway: 10.0.0.200

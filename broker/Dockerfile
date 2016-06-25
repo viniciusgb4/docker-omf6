@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 
 ENV OMF_SFA_HOME=/root/omf_sfa
-ENV OMF_CERTS_HOME=/root/.omf
+ENV XMPP_SERVER=10.0.0.200
 ENV DOMAIN=ufg.br
 ENV AM_SERVER_DOMAIN=ufg.br
 ENV XMPP_DOMAIN=ufg.br
@@ -18,6 +18,8 @@ RUN apt-get install -y --force-yes \
    libssl-dev \
    libxmlsec1-dev \
    libyaml-dev \
+   libxml2-dev \
+   libxslt-dev \
    ntp \
    #ruby-dev \
    syslinux \
