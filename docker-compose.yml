@@ -8,7 +8,7 @@ services:
       ports:
           - "8001:8001"
       #entrypoint: /usr/bin/pull-and-run.sh
-      network-mode: "host"
+      network_mode: "host"
       volumes:
           - ./broker/omf-images:/root/omf-images
           - ./broker/data/omf_sfa:/root/omf_sfa
@@ -17,7 +17,7 @@ services:
   pubsub:
       image: sameersbn/openfire
       container_name: pubsub
-      network-mode: "host"
+      network_mode: "host"
       volumes:
           - ./openfire/data/:/var/lib/openfire
       restart: unless-stopped
