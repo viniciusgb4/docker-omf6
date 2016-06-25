@@ -86,4 +86,6 @@ sleep 10s
 
 /root/omf_sfa/bin/create_resource -t node -c /root/omf_sfa/bin/conf.yaml -i /root/resources.json
 
+export TERM=xterm
+
 tail -f /var/log/omf-sfa.log

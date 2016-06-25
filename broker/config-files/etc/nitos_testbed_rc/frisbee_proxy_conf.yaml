@@ -2,7 +2,7 @@
 :xmpp:
   :username: frisbee_user
   :password: lab251
-  :server: $XMPP_SERVER
+  :server: xmpp_server
 #x509 certificates to be used by user_proxy
 :auth:
   :root_cert_dir: /root/.omf/trusted_roots
@@ -24,7 +24,7 @@
 #frisbee and imagezip configuration
 :frisbee:
   # Directory images are stored
-  :imageDir: /media/arquivos/omf-images-6
+  :imageDir: /root/omf-images
   #defaultImage: orbit-baseline
   :defaultImage: baseline.ndz
 
@@ -49,4 +49,4 @@
 
   # Local interface to bind to for frisbee traffic
   #multicastIF: 192.168.204.1
-  :multicastIF: $XMPP_SERVER
+  :multicastIF: xmpp_server

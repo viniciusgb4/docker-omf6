@@ -2,6 +2,7 @@ FROM ubuntu:14.04
 
 ENV OMF_SFA_HOME=/root/omf_sfa
 ENV XMPP_SERVER=10.0.0.200
+ENV BROKER_ADDRESS=10.16.0.200
 ENV DOMAIN=ufg.br
 ENV AM_SERVER_DOMAIN=ufg.br
 ENV XMPP_DOMAIN=ufg.br
@@ -16,12 +17,12 @@ RUN apt-get install -y --force-yes \
    libsqlite3-dev \
    libreadline6-dev \
    libssl-dev \
-   libxmlsec1-dev \
    libyaml-dev \
    libxml2-dev \
+   libxmlsec1-dev \
    libxslt-dev \
+   nano \
    ntp \
-   #ruby-dev \
    syslinux \
    xmlsec1 \
    wget \
