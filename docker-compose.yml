@@ -5,15 +5,21 @@ services:
           context: ./broker
       image: broker
       container_name: broker
-      network_mode: "host"
+      networks:
+            fibre_nw:
+              ipv4_address: 10.0.0.200
       volumes:
           - ./broker/omf-images:/root/omf-images
           - ./broker/data/omf_sfa/inventory.rb:/root/omf_sfa/inventory.rb
       restart: unless-stopped
-  pubsub:
-      image: sameersbn/openfire
-      container_name: pubsub
-      network_mode: "host"
-      volumes:
-          - ./openfire/data/:/var/lib/openfire
-      restart: unless-stopped
+      - "53:53/udp"
+                - "67:67/udp"
+                - "69:69/udp"
+#  pubsub:
+#      image: rabbitmq:3-management
+#      container_name: pubsub
+#      hostname: testbed
+#      ports:
+#          - 5672:5672 # port for the daemon API, can be exposed to public.
+#          - 15672:15672 # port for the Management interface
+#      env_file: rabbitmq.env
