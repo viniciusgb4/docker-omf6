@@ -8,8 +8,7 @@ services:
       network_mode: "host"
       volumes:
           - ./broker/omf-images:/root/omf-images
-          - ./broker/data/omf_sfa:/root/omf_sfa
-          - /tftpboot:/tftpboot
+          - ./broker/data/omf_sfa/inventory.rb:/root/omf_sfa/inventory.rb
       restart: unless-stopped
   pubsub:
       image: sameersbn/openfire

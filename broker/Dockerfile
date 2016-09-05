@@ -1,43 +1,44 @@
 FROM ubuntu:14.04
 
 ENV OMF_SFA_HOME=/root/omf_sfa
-ENV XMPP_SERVER=10.0.0.200
+ENV AMQP_SERVER=10.0.0.200
 ENV BROKER_ADDRESS=10.16.0.200
 ENV DOMAIN=ufg.br
 ENV AM_SERVER_DOMAIN=ufg.br
-ENV XMPP_DOMAIN=ufg.br
+ENV AMQP_DOMAIN=ufg.br
 
 RUN echo 'deb http://pkg.mytestbed.net/ubuntu precise/ ' >> /etc/apt/sources.list \
 && apt-get update
-RUN apt-get install -y --force-yes \
-   build-essential \
-   dnsmasq \
-   frisbee \
-   git \
-   libsqlite3-dev \
-   libreadline6-dev \
-   libssl-dev \
-   libyaml-dev \
-   libxml2-dev \
-   libxmlsec1-dev \
-   libxslt-dev \
-   nano \
-   ntp \
-   syslinux \
-   xmlsec1 \
-   wget \
-   zlib1g-dev
+RUN apt-get install -y --force-yes --reinstall \
+       build-essential \
+       curl \
+       dnsmasq \
+       frisbee \
+       git \
+       libsqlite3-dev \
+       libreadline6-dev \
+       libssl-dev \
+       libyaml-dev \
+       libxml2-dev \
+       libxmlsec1-dev \
+       libxslt-dev \
+       links2 \
+       ntp \
+       python \
+       syslinux \
+       xmlsec1 \
+       wget \
+       zlib1g-dev
 
-RUN cd /tmp \
-   && wget http://ftp.ruby-lang.org/pub/ruby/2.1/ruby-2.1.5.tar.gz \
-   && tar -xvzf ruby-2.1.5.tar.gz \
-   && cd ruby-2.1.5/ \
-   && ./configure --prefix=/usr/local \
-   && make \
-   && make install \
-   && rm -rf /tmp/ruby
-
-RUN gem install bundler --no-ri --no-rdoc
+cd /tmp \
+    && wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz \
+    && tar -xvzf ruby-2.2.3.tar.gz \
+    && cd ruby-2.2.3/ \
+    && ./configure --prefix=/usr/local \
+    && make \
+    && make install \
+    && rm -rf /tmp/ruby \
+    && gem install bundler --no-ri --no-rdoc
 
 EXPOSE 8001/tcp
 
