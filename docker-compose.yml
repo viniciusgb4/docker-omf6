@@ -12,9 +12,6 @@ services:
           - ./broker/omf-images:/root/omf-images
           - ./broker/data/omf_sfa/inventory.rb:/root/omf_sfa/inventory.rb
       restart: unless-stopped
-      - "53:53/udp"
-                - "67:67/udp"
-                - "69:69/udp"
 #  pubsub:
 #      image: rabbitmq:3-management
 #      container_name: pubsub
@@ -23,3 +20,15 @@ services:
 #          - 5672:5672 # port for the daemon API, can be exposed to public.
 #          - 15672:15672 # port for the Management interface
 #      env_file: rabbitmq.env
+
+networks:
+  fibre_nw:
+    driver: bridge
+    driver_opts:
+#      com.docker.network.enable_ipv6: "true"
+      com.docker.network.bridge.host_binding_ipv4: 10.0.0.1
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.0.0.0/16
+#        gateway: 172.16.238.1
