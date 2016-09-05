@@ -29,3 +29,5 @@ main() {
     install_docker
     install_docker_compose
 }
+
+main

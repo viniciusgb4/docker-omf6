@@ -1,8 +1,9 @@
-#xmpp details
-:xmpp:
-  :username: user_xmpp
+#pubsub details
+:pubsub:
+  :protocol: amqp
+  :username: testbed
   :password: lab251
-  :server: xmppserver
+  :server: <domain>
 #x509 certificates to be used by user_proxy
 :auth:
   :root_cert_dir: /root/.omf/trusted_roots

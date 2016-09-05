@@ -1,8 +1,9 @@
-#xmpp details
-:xmpp:
-  :username: frisbee_user
+#pubsub details
+:pubsub:
+  :protocol: amqp
+  :username: testbed
   :password: lab251
-  :server: xmppserver
+  :server: <domain>
 #x509 certificates to be used by user_proxy
 :auth:
   :root_cert_dir: /root/.omf/trusted_roots
@@ -10,16 +11,16 @@
   :entity_key: /root/.omf/frisbee_factory.pkey
 
 # URL for the rest interface of the broker
-:broker_url: https://broker:8001
+:broker_url: https://<domain>:8001
 
 #operation Mode for OmfCommon.init (development, production, etc)
 :operationMode: development
 
-#testbed xmpp topic
+#testbed pubsub topic
 :testbedTopic: am_controller
 
 #testbed domain (resources with other domains will be ignored unless if this has the value 'ALL')
-:testbedDomain: $DOMAIN
+:testbedDomain: <domain>
 
 #frisbee and imagezip configuration
 :frisbee:
@@ -49,4 +50,4 @@
 
   # Local interface to bind to for frisbee traffic
   #multicastIF: 192.168.204.1
-  :multicastIF: xmppserver
+  :multicastIF: <control_network>

@@ -43,10 +43,9 @@ cd /tmp \
 EXPOSE 8001/tcp
 
 #BEGIN COPY CONFIGURATION FILE
-COPY config-files /root/config-files/
+COPY testbed-installer /root/testbed-installer/
 #END COPY CONFIGURATION FILE
 
 #PULL FROM GIT HUB AND RUN BROKER
-COPY entrypoint.sh /usr/bin/
 RUN chmod 755 /usr/bin/entrypoint.sh
-ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+ENTRYPOINT ["/root/testbed-installer/entrypoint.sh"]
