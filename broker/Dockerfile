@@ -48,4 +48,5 @@ COPY testbed-installer /root/testbed-installer/
 
 #PULL FROM GIT HUB AND RUN BROKER
 RUN chmod 755 /root/testbed-installer/entrypoint.sh
+RUN chmod 755 /root/testbed-installer/configure.sh
 ENTRYPOINT ["/root/testbed-installer/entrypoint.sh"]

@@ -247,7 +247,7 @@ remove_testbed() {
 }
 
 install_testbed() {
-    //install_dependencies
+    #install_dependencies
 
     $INSTALLER_HOME/configure.sh
 
