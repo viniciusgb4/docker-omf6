@@ -30,7 +30,7 @@ RUN apt-get install -y --force-yes --reinstall \
        wget \
        zlib1g-dev
 
-cd /tmp \
+RUN cd /tmp \
     && wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz \
     && tar -xvzf ruby-2.2.3.tar.gz \
     && cd ruby-2.2.3/ \
@@ -47,5 +47,5 @@ COPY testbed-installer /root/testbed-installer/
 #END COPY CONFIGURATION FILE
 
 #PULL FROM GIT HUB AND RUN BROKER
-RUN chmod 755 /usr/bin/entrypoint.sh
+RUN chmod 755 /root/testbed-installer/entrypoint.sh
 ENTRYPOINT ["/root/testbed-installer/entrypoint.sh"]
