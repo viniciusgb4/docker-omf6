@@ -6,11 +6,11 @@ services:
       image: broker
       container_name: broker
       networks:
-            fibre_nw:
-              ipv4_address: 10.0.0.200
+            - fibre_net
+#                ipv4_address: 10.0.0.200
       volumes:
           - ./broker/omf-images:/root/omf-images
-          - ./broker/data/omf_sfa/inventory.rb:/root/omf_sfa/inventory.rb
+          - ./broker/data/omf_sfa:/root/omf_sfa
       restart: unless-stopped
 #  pubsub:
 #      image: rabbitmq:3-management
@@ -21,14 +21,15 @@ services:
 #          - 15672:15672 # port for the Management interface
 #      env_file: rabbitmq.env
 
+
 networks:
-  fibre_nw:
-    driver: bridge
-    driver_opts:
+    fibre_net:
+        external:
+            name: fibre_nw
 #      com.docker.network.enable_ipv6: "true"
-      com.docker.network.bridge.host_binding_ipv4: 10.0.0.1
-    ipam:
-      driver: default
-      config:
-      - subnet: 10.0.0.0/16
+#      com.docker.network.bridge.host_binding_ipv4: 10.0.0.1
+#    ipam:
+#      driver: default
+#      config:
+#      - subnet: 10.0.0.0/16
 #        gateway: 172.16.238.1

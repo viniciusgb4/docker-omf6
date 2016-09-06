@@ -68,7 +68,7 @@ configure_bridge() {
         --driver bridge \
         --subnet=$IP_BASE_DHCP_RANGE.0/16 \
         --opt "com.docker.network.bridge.name"="docker_fibre" \
-        --opt "com.docker.network.bridge.host_binding_ipv4"="10.0.0.1" \
+        --opt "com.docker.network.bridge.host_binding_ipv4"="10.0.0.200" \
         fibre_nw
     # Add docker1 to eth1
     brctl addif docker_fibre eth1
