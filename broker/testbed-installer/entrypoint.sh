@@ -190,13 +190,15 @@ remove_testbed_configuration() {
 }
 
 start_broker() {
-    echo "Executing omf_sfa"
-    start omf-sfa
+    printMessage "EXECUTING omf_sfa"
+    bundle exec ruby -I lib lib/omf-sfa/am/am_server.rb start &> /var/log/omf-sfa.log &
 }
 
 start_nitos_rcs() {
-    echo "Executing NITOS Testbed RCs"
-    start ntrc
+    printMessage "EXECUTING NITOS Testbed RCs"
+    user_proxy &> /var/log/ntrc/user_proxy.log &
+    frisbee_proxy &> /var/log/ntrc/frisbee_proxy.log &
+    cm_proxy &> /var/log/ntrc/cm_proxy.log &
 }
 
 insert_nodes() {
@@ -258,22 +260,23 @@ install_testbed() {
     configure_testbed
 
     service dnsmasq restart
+    service rabbitmq-server start
 
     #########################START OF CREATE USER RABBITMQ#####################
     rabbitmqctl add_user testbed lab251
     rabbitmqctl set_permissions -p / testbed ".*" ".*" ".*"
 
-    rabbitmqctl add_user cm_user lab251
-    rabbitmqctl set_permissions -p / cm_user ".*" ".*" ".*"
+    #rabbitmqctl add_user cm_user lab251
+    #rabbitmqctl set_permissions -p / cm_user ".*" ".*" ".*"
 
-    rabbitmqctl add_user frisbee_user lab251
-    rabbitmqctl set_permissions -p / frisbee_user ".*" ".*" ".*"
+    #rabbitmqctl add_user frisbee_user lab251
+    #rabbitmqctl set_permissions -p / frisbee_user ".*" ".*" ".*"
 
-    rabbitmqctl add_user script_user lab251
-    rabbitmqctl set_permissions -p / script_user ".*" ".*" ".*"
+    #rabbitmqctl add_user script_user lab251
+    #rabbitmqctl set_permissions -p / script_user ".*" ".*" ".*"
 
-    rabbitmqctl add_user user_proxy_user lab251
-    rabbitmqctl set_permissions -p / user_proxy_user ".*" ".*" ".*"
+    #rabbitmqctl add_user user_proxy_user lab251
+    #rabbitmqctl set_permissions -p / user_proxy_user ".*" ".*" ".*"
     #########################END OF CREATE USER RABBITMQ#####################
 
     start_broker
@@ -313,6 +316,8 @@ install_testbed() {
         N|n) exit ;;
         *) download_baseline_image;;
     esac
+
+    tail -f /var/log/omf-sfa.log
 }
 
 reinstall_testbed() {
