@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 CONTROL_NETWORK_IP="10.0.0.200"
+CM_NETWORK_IP="172.16.137.3"
 IP_BASE_DHCP_RANGE="10.0.0"
 
 install_dependencies() {
@@ -33,32 +34,7 @@ install_docker_compose() {
     chmod +x /usr/local/bin/docker-compose
 }
 
-set_service_interface() {
-    oldIFS=$IFS
-
-    while read line; do
-        IFS='=' read -r -a array <<< "$line"
-        if [[ ${array[0]} = *"control_network"* ]]; then
-            CONTROL_NETWORK_INTERFACE=${array[1]}
-        fi
-        IFS=$'n'
-    done < $INSTALLER_HOME/conf/interface-network-map.conf
-    IFS=$old_IFS
-}
-
-set_ips() {
-    set_service_interface
-
-    CONTROL_NETWORK_IP=$(/sbin/ifconfig $CONTROL_NETWORK_INTERFACE | grep 'inet end.:' | cut -d: -f2 | awk '{ print $1}')
-
-    if [ -z "$CONTROL_NETWORK_IP" -o "$CONTROL_NETWORK_IP" == " " ]; then
-        CONTROL_NETWORK_IP=$(/sbin/ifconfig $CONTROL_NETWORK_INTERFACE | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
-    fi
-
-    IP_BASE_DHCP_RANGE=$(echo $CONTROL_NETWORK_IP | cut -d"." -f1-3)
-}
-
-configure_bridge() {
+configure_control_bridge() {
 
     # Delete the IP address from eth1
     ip addr del $CONTROL_NETWORK_IP/16 dev eth1
@@ -67,16 +43,33 @@ configure_bridge() {
     docker network create \
         --driver bridge \
         --subnet=$IP_BASE_DHCP_RANGE.0/16 \
-        --opt "com.docker.network.bridge.name"="docker_fibre" \
+        --opt "com.docker.network.bridge.name"="control_bridge" \
         --opt "com.docker.network.bridge.host_binding_ipv4"="10.0.0.200" \
         fibre_nw
     # Add docker1 to eth1
     brctl addif docker_fibre eth1
 }
 
+configure_cm_bridge() {
+
+    # Delete the IP address from eth1
+    ip addr del $CONTROL_NETWORK_IP/24 dev eth2
+
+    # Create "shared_nw" with a bridge name "docker1"
+    docker network create \
+        --driver bridge \
+        --subnet=172.16.137.0/24 \
+        --opt "com.docker.network.bridge.name"="cm_bridge" \
+        --opt "com.docker.network.bridge.host_binding_ipv4"="172.16.137.2" \
+        cm_nw
+    # Add docker1 to eth1
+    brctl addif cm_bridge eth2
+}
+
 main() {
     install_dependencies
-    configure_bridge
+    configure_control_bridge
+    configure_cm_bridge
     install_docker
     install_docker_compose
 }

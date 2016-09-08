@@ -7,6 +7,7 @@ services:
       container_name: broker
       networks:
             - fibre_net
+            - cm_net
 #                ipv4_address: 10.0.0.200
       volumes:
           - ./broker/omf-images:/root/omf-images
@@ -27,6 +28,9 @@ networks:
     fibre_net:
         external:
             name: fibre_nw
+    cm_net:
+            external:
+                name: cm_nw
 #      com.docker.network.enable_ipv6: "true"
 #      com.docker.network.bridge.host_binding_ipv4: 10.0.0.1
 #    ipam:
