@@ -285,37 +285,9 @@ install_testbed() {
     echo "Waiting for services start up..."
     sleep 5s
 
-    echo -n "Do you want to install the OML Server? (Y/n)"
-    read option
-    case $option in
-        Y|y) install_oml2 ;;
-        N|n) ;;
-        *) install_oml2 ;;
-    esac
-
-    echo -n "Do you want to insert the resources into Broker? (Y/n)"
-    read option
-    case $option in
-        Y|y) insert_nodes ;;
-        N|n) ;;
-        *) insert_nodes;;
-    esac
-
-    echo -n "Do you want to configure omf_ec on Icarus nodes? (Y/n)"
-    read option
-    case $option in
-        Y|y) $INSTALLER_HOME/configure-icarus.sh ;;
-        N|n) ;;
-        *) $INSTALLER_HOME/configure-icarus.sh ;;
-    esac
-
-    echo -n "Do you want to download the baseline image for icarus nodes? (Y/n)"
-    read option
-    case $option in
-        Y|y) download_baseline_image ;;
-        N|n) exit ;;
-        *) download_baseline_image;;
-    esac
+    install_oml2
+    insert_nodes
+    download_baseline_image
 
     tail -f /var/log/omf-sfa.log
 }
@@ -330,36 +302,7 @@ reinstall_testbed() {
 }
 
 main() {
-    echo "------------------------------------------"
-    echo "Options:"
-    echo
-    echo "1. Install Testbed"
-    echo "2. Uninstall Testbed"
-    echo "3. Reinstall Testbed"
-    echo "4. Install only Broker"
-    echo "5. Uninstall Broker"
-    echo "6. Install only NITOS Testbed RCs"
-    echo "7. Uninstall NITOS Testbed RCs"
-    echo "8. Insert resources into Broker"
-    echo "9. Download baseline.ndz"
-    echo "10. Configure omf_rc on Icarus nodes"
-    echo "11. Exit"
-    echo
-    echo -n "Choose an option..."
-    read option
-    case $option in
-    1) install_testbed ;;
-    2) remove_testbed ;;
-    3) reinstall_testbed ;;
-    4) install_broker ;;
-    5) remove_broker ;;
-    6) install_nitos_rcs ;;
-    7) remove_nitos_rcs ;;
-    8) insert_nodes ;;
-    9) download_baseline_image ;;
-    10) $INSTALLER_HOME/configure-icarus.sh ;;
-    *) exit ;;
-    esac
+    install_testbed
 }
 
 install_testbed
