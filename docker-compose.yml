@@ -6,6 +6,7 @@ services:
       image: broker
       container_name: broker
       networks:
+            - internet
             - fibre_net
             - cm_net
 #                ipv4_address: 10.0.0.200
@@ -25,6 +26,8 @@ services:
 
 
 networks:
+    internet:
+         driver: bridge
     fibre_net:
         external:
             name: fibre_nw

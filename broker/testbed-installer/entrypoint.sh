@@ -191,6 +191,7 @@ remove_testbed_configuration() {
 
 start_broker() {
     printMessage "EXECUTING omf_sfa"
+    cd /root/omf_sfa
     bundle exec ruby -I lib lib/omf-sfa/am/am_server.rb start &> /var/log/omf-sfa.log &
 }
 
